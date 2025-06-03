@@ -34,5 +34,14 @@ public class Main {
         Product setProduct = productDAO.get(1);
         setProduct.setMarque("Apple");
         productDAO.save(setProduct);
+
+        Product getAllProduct = (Product) productDAO.getAllProduct();
+        productDAO.save(getAllProduct);
+
+        Product getProductByPrice = (Product) productDAO.getProductByPrice(100);
+        productDAO.save(getProductByPrice);
+
+        Product getProductByPurchaseDate = (Product) productDAO.getProductByPurchaseDate(2021, 2020, 2025);
+        productDAO.save(getProductByPurchaseDate);
     }
 }
