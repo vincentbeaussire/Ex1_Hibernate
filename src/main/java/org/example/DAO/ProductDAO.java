@@ -30,23 +30,42 @@ public class ProductDAO {
     public Product get (int id) { return session.get(Product.class, id); }
 
     public List<Product> get () {
-        return session.createQuery("select p from Product", Product.class).getResultList();
+        return session.createQuery("select p from Product p", Product.class).getResultList();
     }
 
-    public List<Product> getAllProduct () {
-        return (List<Product>) session.createQuery("select p from Product p", List.class);
+    public List<Product> getAllProduct (int id) {
+        return session.createQuery("select id from Product", Product.class).getResultList();
     }
 
     public List<Product> getProductByPrice(double prix) {
-        TypedQuery<Product> query = session.createQuery("select p from Product p where p.prix > 100", Product.class);
-        query.setParameter("prix", prix);
+        TypedQuery<Product> query = session.createQuery("select p from Product p where p.prix > 100", Product.class);;
         return query.getResultList();
     }
 
-    public List<Product> getProductByPurchaseDate(LocalDate dateAchat, LocalDate startDate, LocalDate endDate) {
-        TypedQuery<Product> query = session.createQuery("select p from Product p where p.dateAchat between :startDate and :endDate", Product.class);
+    public List<Product> getProductByPurchaseDate(String reference, LocalDate startDate, LocalDate endDate) {
+        TypedQuery<Product> query = session.createQuery("select reference from Product p where p.dateAchat between :startDate and :endDate", Product.class);
         query.setParameter("startDate", startDate);
         query.setParameter("endDate", endDate);
         return query.getResultList();
+    }
+
+    public List getReferenceByStock(String reference, int stock) {
+        return session.createQuery("select reference from Product p where p.stock = :stock", List.class).getSingleResult();
+    }
+
+    public List getStockByBrand(int stock, String marque) {
+        return session.createQuery("select SUM(stock) from Product p where p.marque = :marque", List.class).getSingleResult();
+    }
+
+    public List getAveragePriceProduct(double prix) {
+        return session.createQuery("select AVG(prix) from Product", List.class).getSingleResult();
+    }
+
+    public List getProductByBrand(String marque, String reference) {
+        return session.createQuery("select p from Product p where p.reference = :reference order by p.marque", List.class).getSingleResult();
+    }
+
+    public List deleteProductByBrand(String marque) {
+        return session.createQuery("delete from Product p where p.marque = :marque", List.class).getSingleResult();
     }
 }

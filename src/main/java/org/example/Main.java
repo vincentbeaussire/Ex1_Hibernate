@@ -5,6 +5,7 @@ import org.example.entity.Product;
 import org.example.util.SessionFactorySingleton;
 
 import java.time.LocalDate;
+import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -35,13 +36,17 @@ public class Main {
         setProduct.setMarque("Apple");
         productDAO.save(setProduct);
 
-        Product getAllProduct = (Product) productDAO.getAllProduct();
+        Product getAllProduct = (Product) productDAO.getAllProduct(1);
         productDAO.save(getAllProduct);
 
         Product getProductByPrice = (Product) productDAO.getProductByPrice(100);
         productDAO.save(getProductByPrice);
 
-        Product getProductByPurchaseDate = (Product) productDAO.getProductByPurchaseDate(2021, 2020, 2025);
-        productDAO.save(getProductByPurchaseDate);
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Veuillez saisir la date d'achat des produits commandés.");
+        String orderProduct = scanner.next();
+
+        System.out.println("Veuillez saisir le numéro et la référence du produit.");
+        String numRef = scanner.next();
     }
 }
