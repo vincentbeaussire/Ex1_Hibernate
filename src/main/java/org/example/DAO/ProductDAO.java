@@ -50,7 +50,7 @@ public class ProductDAO {
     }
 
     public List getReferenceByStock(String reference, int stock) {
-        return session.createQuery("select reference from Product p where p.stock = :stock", List.class).getSingleResult();
+        return session.createQuery("select reference from Product p where p.stock < :stock", List.class).getSingleResult();
     }
 
     public List getStockByBrand(int stock, String marque) {
@@ -66,6 +66,8 @@ public class ProductDAO {
     }
 
     public List deleteProductByBrand(String marque) {
+        session.beginTransaction();
+        session.getTransaction().commit();
         return session.createQuery("delete from Product p where p.marque = :marque", List.class).getSingleResult();
     }
 }

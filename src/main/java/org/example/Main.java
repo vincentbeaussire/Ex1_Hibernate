@@ -1,6 +1,8 @@
 package org.example;
 
 import org.example.DAO.ProductDAO;
+import org.example.entity.Comment;
+import org.example.entity.Image;
 import org.example.entity.Product;
 import org.example.util.SessionFactorySingleton;
 
@@ -48,5 +50,16 @@ public class Main {
 
         System.out.println("Veuillez saisir le numéro et la référence du produit.");
         String numRef = scanner.next();
+
+        Image image = new Image();
+        image.setReference(numRef);
+        image.setUrl("https://www.google.com/");
+        System.out.println(image);
+
+        Comment comment = new Comment();
+        comment.setContent(numRef);
+        comment.setDate(LocalDate.now());
+        comment.setNote(5);
+        System.out.println(comment);
     }
 }
